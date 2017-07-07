@@ -12,7 +12,6 @@ var fnt = pImage.registerFont('Calibri.ttf', 'Calibri');
 fnt.loadSync();
 
 http.createServer(function(request, response) {
-	// console.log('url: ', request.url)
 	switch (request.method) {
 		case "GET":
 			if (request.url === '/') {
@@ -84,7 +83,6 @@ response.end();
 			response.writeHead(405, 'Method Not Allowed');
 			break;
 	}
-	// response.end();
 }).listen(port);
 
 function createOptimizerRequestUrl(jsonRequest) {
