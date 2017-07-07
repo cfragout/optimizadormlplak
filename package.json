@@ -1,0 +1,23 @@
+{
+  "name": "optimizadormlplak",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cfragout/optimizadormlplak.git"
+  },
+  "author": "cfr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cfragout/optimizadormlplak/issues"
+  },
+  "homepage": "https://github.com/cfragout/optimizadormlplak#readme",
+  "devDependencies": {
+    "pureimage": "0.0.21",
+    "request": "^2.81.0"
+  }
+}
