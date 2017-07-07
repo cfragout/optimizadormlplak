@@ -16,7 +16,7 @@
     "url": "https://github.com/cfragout/optimizadormlplak/issues"
   },
   "homepage": "https://github.com/cfragout/optimizadormlplak#readme",
-  "devDependencies": {
+  "dependencies": {
     "pureimage": "0.0.21",
     "request": "^2.81.0"
   }
