@@ -4,7 +4,9 @@ var pImage = require('pureimage');
 var req = require('request');
 var port = process.env.PORT || 8000;
 var image;
+var images = [];
 var ctx;
+var siteUrl = 'https://optimizador-mlplak.herokuapp.com/';
 var fnt = pImage.registerFont('Calibri.ttf', 'Calibri');
 fnt.loadSync();
 
@@ -35,14 +37,29 @@ http.createServer(function(request, response) {
 					var requestUrl = createOptimizerRequestUrl(parsedData);
 
 					// envio request a placacentro
-					req(requestUrl, function (error, response, body) {
+					req(requestUrl, function (error, r, body) {
 						var cortes = JSON.parse(body);
 						drawOptimization(parsedData.nombreProyecto, parsedData.placa.ancho, parsedData.placa.alto, cortes);
+
+console.log(body);
+
+var res = {
+	nombreProyecto: parsedData.nombreProyecto,
+	placas: [
+		{ imagen: siteUrl + images[0], cubierto: cortes[0].cover} // hacerlo para todas las imagenes
+	]
+};
+response.writeHead(200, {'Content-Type': 'application/json'});
+response.write(JSON.stringify(res));
+response.end();
+
+
 					});
 				});
 
 			} else {
 				response.writeHead(404);
+				response.end();
 			}
 
 			break;
@@ -52,7 +69,7 @@ http.createServer(function(request, response) {
 			response.writeHead(405, 'Method Not Allowed');
 			break;
 	}
-	response.end();
+	// response.end();
 }).listen(port);
 
 function createOptimizerRequestUrl(jsonRequest) {
@@ -85,11 +102,13 @@ function drawOptimization(name, width, height, cortes) {
 		image = pImage.make(w, h);
 		ctx = image.getContext('2d');
 		drawPageOnCanvas(cortes[i]);
-		pImage.encodePNG(image, fs.createWriteStream(name + '_' + i +'.png'), function(err) {
+		var imgName = name + '_' + i +'.png';
+		pImage.encodePNG(image, fs.createWriteStream(imgName), function(err) {
 			if (err) {
 				console.log('Error: ', err);
 			}
 		});
+		images.push(imgName);				
 	}
 }
 
