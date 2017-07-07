@@ -144,5 +144,4 @@ function drawCut(cut, bgColor, borderColor) {
 	} else { // texto en 1 linea
 		drawCenteredText(xPos + (width / 2) - 10, yPos + (height / 2), width, height, w.toString() + ' X ' + h.toString());
 	}
-
 }
