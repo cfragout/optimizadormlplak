@@ -50,6 +50,7 @@ http.createServer(function(request, response) {
 
 				request.on('end', function(data) {
 					var parsedData = JSON.parse(requestBody);
+					parsedData.nombreProyecto = parsedData.nombreProyecto.split(' ').join('_');
 					// del request que me hicieron (POST), creo el request (GET) a placacentro
 					var requestUrl = createOptimizerRequestUrl(parsedData);
 
