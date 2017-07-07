@@ -2,7 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var pImage = require('pureimage');
 var req = require('request');
-var port = 8000;
+var port = process.env.PORT || 8000;
 var image;
 var ctx;
 var fnt = pImage.registerFont('calibri.ttf', 'Calibri');
