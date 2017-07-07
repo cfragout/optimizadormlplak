@@ -2,6 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var pImage = require('pureimage');
 var req = require('request');
+var url = require('url');
 var port = process.env.PORT || 8000;
 var image;
 var images = [];
@@ -18,7 +19,23 @@ http.createServer(function(request, response) {
 				response.writeHead(200, {'Content-Type': 'text/html'});
 				response.write('<html><body><h1>Optimizador de corte</h1><div><span>Estado del optimizador: </span><span style="color:green">ONLINE</span></div></body></html>');
 			} else {
+				if (request.url.endsWith('.png')) {
+					var urlReq = url.parse(request.url, true);
+					var param = urlReq.pathname;
+					try {
+						var img = fs.readFileSync('.'+ param);
+						response.writeHead(200, {'Content-Type': 'image/png' });
+						response.end(img, 'binary');
+
+					} catch(err) {
+						response.writeHead(404);
+					}
+				} else {
+					response.writeHead(404);
+				}
+
 			}
+			response.end();
 			break;
 		case "POST":
 			if (request.url === '/optimizar') {
@@ -41,8 +58,6 @@ http.createServer(function(request, response) {
 						var cortes = JSON.parse(body);
 						drawOptimization(parsedData.nombreProyecto, parsedData.placa.ancho, parsedData.placa.alto, cortes);
 
-console.log(body);
-
 var res = {
 	nombreProyecto: parsedData.nombreProyecto,
 	placas: [
@@ -64,7 +79,6 @@ response.end();
 
 			break;
 		case "HEAD":
-			break;			
 		default:
 			response.writeHead(405, 'Method Not Allowed');
 			break;
