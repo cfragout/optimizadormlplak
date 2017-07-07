@@ -5,7 +5,7 @@ var req = require('request');
 var port = process.env.PORT || 8000;
 var image;
 var ctx;
-var fnt = pImage.registerFont('calibri.ttf', 'Calibri');
+var fnt = pImage.registerFont('Calibri.ttf', 'Calibri');
 fnt.loadSync();
 
 http.createServer(function(request, response) {
